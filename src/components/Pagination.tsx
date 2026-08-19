@@ -1,15 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-export default function Pagination({ 
-  currentPage, 
-  hasNext, 
+export default function Pagination({
+  currentPage,
+  hasNext,
   basePath,
-  searchParams: initialSearchParams = {}
-}: { 
+  searchParams: initialSearchParams = {},
+}: {
   currentPage: number;
   hasNext: boolean;
   basePath: string;
@@ -28,25 +28,27 @@ export default function Pagination({
   };
 
   return (
-    <nav className="pagination" aria-label="Pagination">
+    <nav className="mt-8 flex items-center justify-center gap-3" aria-label="Pagination">
       <button
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage <= 1}
         aria-label="Halaman sebelumnya"
+        className="btn-press inline-flex items-center gap-2 border-2 border-ink bg-bone px-5 py-2.5 font-sans text-sm font-bold uppercase tracking-wider text-ink shadow-brutal-sm transition-colors hover:bg-neon disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-bone dark:border-bone dark:bg-ink dark:text-bone dark:shadow-brutal-white"
       >
-        « Sebelumnya
+        <ChevronLeft size={16} /> Prev
       </button>
-      
-      <span style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#999' }}>
-        Halaman {currentPage}
+
+      <span className="border-2 border-ink bg-bone px-4 py-2.5 font-sans text-sm font-bold uppercase tracking-wider text-ink shadow-brutal-sm dark:border-bone dark:bg-ink dark:text-bone">
+        Page {currentPage}
       </span>
 
       <button
         onClick={() => handlePageChange(currentPage + 1)}
         disabled={!hasNext}
         aria-label="Halaman selanjutnya"
+        className="btn-press inline-flex items-center gap-2 border-2 border-ink bg-bone px-5 py-2.5 font-sans text-sm font-bold uppercase tracking-wider text-ink shadow-brutal-sm transition-colors hover:bg-neon disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-bone dark:border-bone dark:bg-ink dark:text-bone dark:shadow-brutal-white"
       >
-        Selanjutnya »
+        Next <ChevronRight size={16} />
       </button>
     </nav>
   );

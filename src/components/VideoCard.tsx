@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { Play } from 'lucide-react';
 import { VideoListItem } from '@/types';
 
 interface VideoCardProps {
@@ -8,44 +9,37 @@ interface VideoCardProps {
 
 export default function VideoCard({ video }: VideoCardProps) {
   return (
-    <Link href={`/video/${video.slug}`} className="card" style={{ display: 'block' }}>
-      <div style={{ position: 'relative', aspectRatio: '16/9' }}>
+    <Link
+      href={`/video/${video.slug}`}
+      className="card-brutal group flex flex-col border-2 border-ink bg-bone shadow-brutal dark:border-bone dark:bg-ink dark:shadow-brutal-white"
+    >
+      <div className="relative aspect-video overflow-hidden border-b-2 border-ink dark:border-bone">
         {video.thumb ? (
           <Image
             src={video.thumb}
             alt={video.title}
             fill
-            className="card-thumb"
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
             sizes="(max-width: 600px) 50vw, (max-width: 1000px) 33vw, 25vw"
             placeholder="blur"
             blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAGggJ/PchI7wAAAABJRU5ErkJggg=="
           />
         ) : (
-          <div className="skeleton" style={{ width: '100%', height: '100%' }} />
+          <div className="skeleton h-full w-full" />
         )}
-        <div style={{
-          position: 'absolute',
-          inset: 0,
-          background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%)',
-          display: 'flex',
-          alignItems: 'flex-end',
-          padding: 12,
-        }}>
-          <span style={{
-            background: '#e53935',
-            color: 'white',
-            padding: '4px 10px',
-            borderRadius: 4,
-            fontSize: 12,
-            fontWeight: 600,
-          }}>
-            ▶ Tonton
-          </span>
-        </div>
+        <span className="absolute left-2 top-2 inline-flex items-center gap-1 border-2 border-ink bg-neon px-2 py-0.5 font-sans text-[10px] font-bold uppercase tracking-wider text-ink shadow-brutal-sm dark:border-bone">
+          <Play size={11} className="fill-ink" /> Watch
+        </span>
       </div>
-      <div className="card-body">
-        <h3 className="card-title">{video.title}</h3>
-        {video.date && <div className="card-meta"><span>{video.date}</span></div>}
+      <div className="flex flex-1 flex-col gap-2 p-3">
+        <h3 className="font-display text-lg leading-tight tracking-wide text-ink dark:text-bone">
+          {video.title}
+        </h3>
+        {video.date && (
+          <p className="mt-auto font-sans text-[11px] font-bold uppercase tracking-wider text-ink/60 dark:text-bone/60">
+            {video.date}
+          </p>
+        )}
       </div>
     </Link>
   );
